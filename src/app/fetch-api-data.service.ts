@@ -65,7 +65,7 @@ export class FetchApiDataService {
    * @param {string} title - One movie title.
    * @returns {Observable<any>} - Observable for the API response.
    */
-  getOneMovies(title: string): Observable<any> {
+  getOneMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/' + title, {
       headers: new HttpHeaders(
@@ -80,11 +80,12 @@ export class FetchApiDataService {
 
   /**
    * Api call for the Get Director endpoint.
+   * @param {string} DirectorName - genre name for genre
    * @returns {Observable<any>} - Observable for the API response.
    */
-  getDirector(): Observable<any> {
+  getDirector(DirectorName: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies/directors/:Name', {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'movies/directors/' + DirectorName, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -95,11 +96,12 @@ export class FetchApiDataService {
 
   /**
    * Api call for the Get Genre endpoint.
+   * @param {string} GenreName
    * @returns {Observable<any>} - Observable for the API response.
    */
-  getGenre(): Observable<any> {
+  getGenre(GenreName: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies/genre/:Name', {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'movies/genre/' + GenreName, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -110,21 +112,28 @@ export class FetchApiDataService {
 
   /**
    * Api call for the Get User endpoint.
+   * @param {string} Username - get username for user
    * @returns {Observable<any>} - Observable for the API response.
    */
-  getUser(): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user;
-  }
+  getUser(Username: string): Observable<any> {
+    const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    return this.http.put(apiUrl + 'users/' + Username, {headers: new HttpHeaders(
+      {
+        Authorization: 'Bearer ' + token,
+      })}).pipe(
+      map(this.extractResponseData),
+      catchError(this.handleError)
+    );  }
 
   /**
    * Api call for the Get Favourite Movies for a user endpoint
-   * @param {string} username - Users username for getting favorite Movies.
+   * @param {string} Username - Users username for getting favorite Movies.
    * @returns {Observable<any>} - Observable for the API response.
    */
-  getFavouriteMovies(username: string): Observable<any> {
+  getFavouriteMovies(Username: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'users/' + username, {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'users/' + Username + '/movies', {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
