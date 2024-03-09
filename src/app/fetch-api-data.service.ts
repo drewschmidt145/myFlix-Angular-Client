@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = '';
+const apiUrl = 'https://myflix-movieapplication-16850a5656e8.herokuapp.com/';
 @Injectable({
   providedIn: 'root'
 })
@@ -116,7 +116,6 @@ export class FetchApiDataService {
    * @returns {Observable<any>} - Observable for the API response.
    */
   getUser(Username: string): Observable<any> {
-    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http.put(apiUrl + 'users/' + Username, {headers: new HttpHeaders(
       {
