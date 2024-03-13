@@ -1,14 +1,29 @@
 .movie-view {
   display: flex;
-  margin: .5rem auto;
-  padding: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
 }
 
 .movie-card {
-  margin-top: 15vh;
-  margin-right: 20px;
-  width: 50vw;
-  justify-self: center;
-  justify-content: center;
-  padding: 5px;
+  margin: 1rem;
+  margin-top: 7vh;
+  width: 300px;
+}
+
+.movie-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.movie-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.movie-actions {
+  display: flex;
+  justify-content: space-between;
 }

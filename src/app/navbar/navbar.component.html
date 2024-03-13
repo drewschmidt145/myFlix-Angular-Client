@@ -1,0 +1,13 @@
+<div class="navigation-bar">
+  <button mat-menu-item (click)="openMovieList()" class="menu-title">
+    <h1>MyFlix</h1>
+  </button>
+  <button class="menus" mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openMovieList()">Home</button>
+    <button mat-menu-item (click)="openProfile()">Profile</button>
+    <button mat-menu-item (click)="logoutUser()">Logout</button>
+  </mat-menu>
+</div>

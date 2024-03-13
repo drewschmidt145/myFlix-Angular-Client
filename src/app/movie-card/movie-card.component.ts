@@ -15,16 +15,16 @@ import { MovieDetailsComponent } from '../movie-details/movie-details.component'
 export class MovieCardComponent implements OnInit {
 
   movies: any[] = [];
-  favorites: any[] = [];
-
-  user = JSON.parse(localStorage.getItem('user') || '');
+  user: any = {};
+  userData = { Username: "", FavoriteMovies: []};
+  FavoriteMovies: any[] = [];
+  isFavMovie: boolean = false;
 
   constructor(
     public fetchMovies: FetchApiDataService,
     public router: Router,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
     
     ) {  }
 
@@ -40,84 +40,73 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  /** 
-   * Get user info and set favorites
-   * @returns favorite movies selected by user
-   * */
-
-  getFavorites(): void {
-    this.fetchMovies.getOneUser().subscribe(
-      (resp: any) => {
-        if (resp.user && resp.user.FavoriteMovies) {
-          this.favorites = resp.user.FavoriteMovies;
-        } else {
-          this.favorites = []; // Set an empty array if data is not available
-        }
-      },
-      (error: any) => {
-        console.error('Error fetching user data:', error);
-        this.favorites = []; // Set an empty array on error as well
-      }
-    );
+  /**
+   * Function to get favMovie list.
+   * @returns Favorite movies of user.
+   */
+  getFavMovies(): void { 
+    this.user = this.fetchMovies.getUser();
+    this.userData.FavoriteMovies = this.user.FavoriteMovies;
+    this.FavoriteMovies = this.user.FavoriteMovies;
+    console.log('Fav Movies in getFavMovie', this.FavoriteMovies); 
   }
 
- /**
-    * Check if a movie is a user's favorite already
-    * @param _id
-    * @returns boolean
-    * */
-
-  isFavoriteMovie(_id: string): boolean {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.FavoriteMovies.indexOf(_id) >= 0;
-  }
-
-  toggleFavorite(movie: any): void {
-    if (this.isFavoriteMovie(movie._id)) {
-      this.removeFavoriteMovie(movie._id);
+  /**
+   * Function to check if movie is a favorite movie.
+   * @param movie  - Movie object to check.
+   * @returns {boolean} - Boolean indicating whether the movie is a favorite.
+   */
+  isFav(movie: any): any {
+    const MovieID = movie._id;
+    if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
+      return true;
     } else {
-      this.addToFavorites(movie._id);
+      return false;
     }
   }
 
   /**
-   * Add a movie to a user's favorites 
-   * Or remove on click if it is already a favorite
-   * @param _id 
-   * @returns success message
-   * */
-
-  public addToFavorites(_id: string): void {
-    if (this.isFavoriteMovie(_id)) {
-      // Movie is already a favorite, so remove it
-      this.removeFavoriteMovie(_id);
-    } else {
-      // Movie is not a favorite, so add it
-      this.fetchMovies.addFavoriteMovies(_id).subscribe(() => {
-        this.snackBar.open('Movie added to favorites', 'OK', {
-          duration: 2000,
-        });
-        this.getFavorites();
-        console.log(this.isFavoriteMovie)
-      });
-    }
+   * Function add / delete favMovie by icon button
+   * @param {any} movie - Movie to toggle favorite icon for. 
+   */
+  toggleFav(movie: any): void {
+    const isFavorite = this.isFav(movie);
+    isFavorite
+      ? this.deleteFavMovies(movie)
+      : this.addFavMovies(movie);
   }
 
   /**
- * This will remove movie from user's favorite list
- * @param _id 
- * @returns suceess message
- */
-
-  public removeFavoriteMovie(_id: string): void {
-    this.fetchMovies.deleteFavoriteMovie(_id).subscribe(() => {
-      this.snackBar.open('removed from favorites', 'OK', {
-        duration: 2000
+   * Function to add movie to favMovie list
+   * @param {any} movie - Movie to add to favorite movies.
+   * @returns Message "Movie has been added to your favorites!"
+   */
+  addFavMovies(movie: any): void {
+    this.user = this.fetchMovies.getUser();
+    this.userData.Username = this.user.Username;
+    this.fetchMovies.addFavoriteMovies(movie).subscribe((result) => {
+      localStorage.setItem('user', JSON.stringify(result));
+      this.getFavMovies(); 
+      this.snackBar.open('Movie has been added to your favorites.', 'OK', {
+        duration: 3000,
       });
-      // Update the favorites list after removal
-      this.getFavorites();
-      this.cdr.detectChanges();
-      console.log(this.isFavoriteMovie)
+    });
+  }
+
+  /**
+   * Function to delete movie from favMovie list.
+   * @param {any} movie - Movie to delete from favorite movies.
+   * @returns Message "Movie has been deleted from your favorites!"
+   */
+  deleteFavMovies(movie: any): void {
+    this.user = this.fetchMovies.getUser();
+    this.userData.Username = this.user.Username;
+    this.fetchMovies.deleteFavoriteMovies(movie).subscribe((result) => {
+      localStorage.setItem('user', JSON.stringify(result));
+      this.getFavMovies();
+      this.snackBar.open('Movie has been deleted from your favorites.', 'OK', {
+        duration: 3000,
+      });
     });
   }
   

@@ -1,0 +1,46 @@
+.navigation-bar {
+  background-color: rgb(62, 171, 162);
+  display: flex;
+  align-items: center; /* Vertically center align content */
+  justify-content: space-between;
+  padding: 10px 20px; /* Padding adjustment for better appearance */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+}
+
+h1 {
+  color: white;
+  margin: 0; /* Remove default margin */
+  font-size: 24px; /* Adjust font size */
+}
+
+.menu-title {
+  display: inline-flex;
+  width: auto;
+}
+
+button.menus {
+  color: white;
+  background-color: transparent; /* Make button transparent */
+}
+
+button.menus:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Add hover effect */
+}
+
+mat-menu {
+  background-color: rgb(62, 171, 162); /* Match menu background with navbar */
+}
+
+mat-menu-item {
+  color: white;
+}
+
+mat-icon {
+  font-size: 24px; /* Adjust icon size */
+  margin-right: 5px; /* Add a small margin between icon and text */
+}

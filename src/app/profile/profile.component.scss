@@ -1,0 +1,111 @@
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.user-card {
+  margin-top: 15vh;
+  margin-right: 2vw;
+  padding: 25px;
+  width: 20%;
+  min-width: 380px;
+}
+.profile-card-header {
+  font-size: 25px;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: center;
+}
+.user-card img {
+  width: 100%;
+  height: 73%;
+  padding: 5px;
+  object-fit: cover;
+  object-position: 100% 0;
+  border-radius: 50%;
+}
+.edit-userdata-card {
+  margin-top: 15vh;
+  padding: 25;
+  width: 60%;
+  min-width: 380px;
+}
+.form-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+}
+.actions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.actions button {
+  margin-top: 15px;
+  margin-left: 10px;
+  width: 20%;
+}
+
+// Movie Cards
+.fav-movies-cards{
+  min-width: 380px;
+  width: 90%;
+  margin-top: 5vh;
+  padding: 25px;
+  justify-content: center;
+  text-align: center;
+}
+.movie-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2vh;
+}
+.movie-card {
+  margin: 15px;
+  width: 350px;
+  height: 550px;
+}
+.img-container {
+  width: 100%;
+  height: 80%;
+}
+.movie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 0;
+}
+.card-header-fav {
+  margin-bottom: 5px;
+  height: 20%;
+  align-items: center;
+  text-align: left;
+}
+.card-title-fav {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.actions-fav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  font-size: 30px;
+  z-index: 2;
+  opacity: 0;
+  background-color: rgba($color: #000000, $alpha: 0.85);
+  height: 440px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  transition: 1s ease-out;
+}
+.actions-fav:hover {
+  opacity: 1;
+}
+.actions-fav button {
+  margin-bottom: 30px;
+  width: 60%;
+}
