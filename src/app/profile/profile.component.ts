@@ -112,55 +112,67 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-    /**
-   * Function that will open the dialog when director button is clicked.
-   * @param {string} name - Name of the director.
-   * @param {string} bio - Biography of the director.
-   * @param {string} birth - Birth date of the director.
-   * @param {string} death - Death date of the director.
-   * @returns Directors name, bio, birth date and death date.
-   */
-    openDirectorDialog(name: string, bio: string, birth: string, death: string): void {
-      this.dialog.open(DirectorComponent, {
-        data: {
-          Name: name,
-          Bio: bio,
-          Birth: birth,
-          Death: death
-        },
-        width: '450px',
-      });
-    }
+  //   /**
+  //  * Function that will open the dialog when director button is clicked.
+  //  * @param {string} name - Name of the director.
+  //  * @param {string} bio - Biography of the director.
+  //  * @param {string} birth - Birth date of the director.
+  //  * @param {string} death - Death date of the director.
+  //  * @returns Directors name, bio, birth date and death date.
+  //  */
+  //   getOneDirector(name: string, bio: string, birth: string, death: string): void {
+  //     this.dialog.open(DirectorComponent, {
+  //       data: {
+  //         Name: name,
+  //         Bio: bio,
+  //         Birth: birth,
+  //         Death: death
+  //       },
+  //       width: '450px',
+  //     });
+  //   }
   
-    /**
-   * Function that will open the dialog when genre button is clicked.
-   * @param {string} name - Name of the genre.
-   * @param {string} description - Description of the genre.
-   * @returns Genre name and discription.
-   */
-    openGenreDialog(name: string, description: string): void {
-      this.dialog.open(GenreComponent, {
-        data: {
-          Name: name,
-          Description: description,
-        },
-        width: '450px',
-      });
-    }
+  //   /**
+  //  * Function that will open the dialog when genre button is clicked.
+  //  * @param {string} name - Name of the genre.
+  //  * @param {string} description - Description of the genre.
+  //  * @returns Genre name and discription.
+  //  */
+  //   getGenre(name: string, description: string): void {
+  //     this.dialog.open(GenreComponent, {
+  //       data: {
+  //         Name: name,
+  //         Description: description,
+  //       },
+  //       width: '450px',
+  //     });
+  //   }
   
-    /**
-   * Function that will open the dialog when synopsis button is clicked
-   * @param {string} description - Description of the movie.
-   * @returns Description of the movie.
-   */
-    openSynopsisDialog(description: string): void {
-      this.dialog.open(MovieDetailsComponent, {
-        data: {
-          Description: description,
-        },
-        width: '450px',
-      });
-    }
+  //   /**
+  //  * Function that will open the dialog when synopsis button is clicked
+  //  * @param {string} description - Description of the movie.
+  //  * @returns Description of the movie.
+  //  */
+  //   openMovieDetails(description: string): void {
+  //     this.dialog.open(MovieDetailsComponent, {
+  //       data: {
+  //         Description: description,
+  //       },
+  //       width: '450px',
+  //     });
+  //   }
+
+  public getGenre(Genre: any){
+    this.dialog.open(GenreComponent, { width: '400px', height: '300px', data: {Genre: Genre}});
+  }
+
+  public getOneDirector(Director: any){
+    this.dialog.open(DirectorComponent, { width: '400px', height: '300px', data: {Director: Director}});
+  }  
+
+  public openMovieDetails(Details: string){
+    this.dialog.open(MovieDetailsComponent, { width: '400px', height: '300px', data: {Details: Details}});
+  }
 
   /**
    * Function to get favMovie list.

@@ -83,27 +83,27 @@
               <div class="img-container">
                   <img mat-card-image src={{movie.ImagePath}} alt={{movie.Title}} />
                   <mat-card-actions class="actions-fav">
-                      <button
-                  mat-button
-                  color="primary"
-                  (click)="openSynopsisDialog(movie.Description)"
-              >
-                  Synopsis
-              </button>
-              <button
-                  mat-button
-                  color="primary"
-                  (click)="openGenreDialog(movie.Genre.Name, movie.Genre.Description)"
-              >
-                  Genre
-              </button>
-              <button
-                  mat-button
-                  color="primary"
-                  (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio,movie.Director.Birth,movie.Director.Death)"
-              >
-                  Director
-              </button>
+                    <button
+                        mat-button
+                        color="primary"
+                        (click)="getGenre(movie.Genre)"
+                    >
+                        Genre
+                    </button>
+                    <button
+                        mat-button
+                        color="primary"
+                        (click)="getOneDirector(movie.Director)"
+                    >
+                        Director
+                    </button>
+                    <button
+                        mat-button
+                        color="primary"
+                        (click)="openMovieDetails(movie.Description)"
+                    >
+                        Synopsis
+                    </button>
                       <button mat-icon-button style="width: auto;" color="primary"  (click)="deleteFavMovies(movie)">
                           <mat-icon style="transform: scale(1.5);" color="primary">favorite</mat-icon>
                       </button>
