@@ -109,3 +109,23 @@
   margin-bottom: 30px;
   width: 60%;
 }
+
+@media screen and (max-width: 400px) {
+  mat-card {
+    margin-left: 100px;
+  }
+
+  .movie-card-container {
+    margin-left: 100px;
+  }
+}
+
+@media screen and (max-width: 250px) {
+  mat-card {
+    margin-left: 120px;
+  }
+
+  .movie-card-container {
+    margin-left: 120px;
+  }
+}
