@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
    * @param {MatDialog} dialog - Material dialog service for opening dialogs.
    */
   constructor(
-    public fetchMovies: FetchApiDataService,
+    public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
     private router: Router,
     public dialog: MatDialog,
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
    * @returns users username, email, birthday, and favorite movies.
    */
   getProfile(): void {
-    this.user = this.fetchMovies.getUser();
+    this.user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;
     this.userData.Email = this.user.Email;
 
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
       this.userData.Birthday = this.datePipe.transform(this.user.Birthday, 'yyyy-MM-dd') || this.user.Birthday;
     }
 
-    this.fetchMovies.getAllMovies().subscribe((response) => {
+    this.fetchApiData.getAllMovies().subscribe((response) => {
       this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
     });
   }
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
    * @returns Message "User update successful" / "Failed to update user"
    */
   editUser(): void {
-    this.fetchMovies.editUser(this.user).subscribe((result) => {
+    this.fetchApiData.editUser(this.user).subscribe((result) => {
       console.log('User update success:', result);
       localStorage.setItem('user', JSON.stringify(result));
       this.snackBar.open('User update successful', 'OK', {
@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
         duration: 2000
       });
     })
-    this.fetchMovies.deleteUser().subscribe((result) => {
+    this.fetchApiData.deleteUser().subscribe((result) => {
       console.log(result);
     });
   }
@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit {
    * @returns All movies.
    */
   getMovies(): void {
-    this.fetchMovies.getAllMovies().subscribe((resp: any) => {
+    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
       console.log(this.movies);
       return this.movies;
@@ -137,7 +137,7 @@ export class ProfileComponent implements OnInit {
    * @returns Favorite movies of user.
   */
   getFavMovies(): void {
-    this.user = this.fetchMovies.getUser();
+    this.user = this.fetchApiData.getUser();
     this.userData.FavoriteMovies = this.user.FavoriteMovies;
     this.FavoriteMovies = this.user.FavoriteMovies;
     console.log('Fav Movies in getFavMovie', this.FavoriteMovies);
@@ -163,9 +163,9 @@ export class ProfileComponent implements OnInit {
    * @returns Message "Movie has been deleted from your favorites!"
    */
   deleteFavMovies(movie: any): void {
-    this.user = this.fetchMovies.getUser();
+    this.user = this.fetchApiData.getUser();
     this.userData.Username = this.user.Username;
-    this.fetchMovies.deleteFavoriteMovies(movie).subscribe((result) => {
+    this.fetchApiData.deleteFavoriteMovies(movie).subscribe((result) => {
       localStorage.setItem('user', JSON.stringify(result));
       this.getFavMovies();
       this. getProfile();

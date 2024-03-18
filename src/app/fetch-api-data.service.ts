@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
@@ -11,12 +11,6 @@ const apiUrl = 'https://myflix-movieapplication-16850a5656e8.herokuapp.com/';
 })
 
 export class FetchApiDataService {
-
-  private userData = new BehaviorSubject<Object>({ Username: '', Password: '', Email: '', Birth: ''});
-  currentUser = this.userData.asObservable();
-
-  private movies = new BehaviorSubject<Object>({});
-  moviesList = this.movies.asObservable(); 
 
   // Inject the HttpClient module to the constructor params
  // This will provide HttpClient to the entire class, making it available via this.http
@@ -46,7 +40,7 @@ export class FetchApiDataService {
    * Api call for the Get All Movies endpoint
    * @returns {Observable<any>} - Observable for the API response.
    */
-  public getAllMovies(): Observable<any> {
+  getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {headers: new HttpHeaders(
       {
@@ -72,7 +66,7 @@ export class FetchApiDataService {
    * @param {string} title - One movie title.
    * @returns {Observable<any>} - Observable for the API response.
    */
-  public getOneMovie(title: string): Observable<any> {
+  getOneMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/' + title, {
       headers: new HttpHeaders(
@@ -90,7 +84,7 @@ export class FetchApiDataService {
    * @param {string} DirectorName - genre name for genre
    * @returns {Observable<any>} - Observable for the API response.
    */
-  public getDirector(DirectorName: string): Observable<any> {
+  getDirector(DirectorName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/directors/' + DirectorName, {headers: new HttpHeaders(
       {
@@ -106,7 +100,7 @@ export class FetchApiDataService {
    * @param {string} GenreName
    * @returns {Observable<any>} - Observable for the API response.
    */
-  public getGenre(GenreName: string): Observable<any> {
+  getGenre(GenreName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/genre/' + GenreName, {headers: new HttpHeaders(
       {
@@ -123,8 +117,10 @@ export class FetchApiDataService {
    */
    getUser(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const token = localStorage.getItem('token');
     return user;
   }
+
 
   /**
    * Making the api call for the Get Favorite Movies for a user endpoint
@@ -167,10 +163,10 @@ export class FetchApiDataService {
    * @param {any} userDetails - User details for updating user information.
    * @returns {Observable<any>} - Observable for the API response.
    */
-  editUser(user: any): Observable<any> {
-    console.log(user);
+  editUser(userDetails: any): Observable<any> {
+    console.log(userDetails.Username)
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + 'users/' + user.Username, user, {headers: new HttpHeaders(
+    return this.http.put(apiUrl + 'users/' + userDetails.Username, userDetails, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -178,6 +174,7 @@ export class FetchApiDataService {
       catchError(this.handleError)
     );
   }
+
 
   /**
    * Making the api call for the Delete User endpoint
