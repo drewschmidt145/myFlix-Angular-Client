@@ -167,10 +167,10 @@ export class FetchApiDataService {
    * @param {any} userDetails - User details for updating user information.
    * @returns {Observable<any>} - Observable for the API response.
    */
-  editUser(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  editUser(user: any): Observable<any> {
+    console.log(user);
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + 'users/' + userDetails.Username, userDetails, {headers: new HttpHeaders(
+    return this.http.put(apiUrl + 'users/' + user.Username, user, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(

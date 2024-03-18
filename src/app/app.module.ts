@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
 
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatListModule,
     MatToolbarModule,
+    CommonModule,
   ],
   providers: [
     provideClientHydration(),

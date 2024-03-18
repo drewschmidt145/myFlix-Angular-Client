@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 // Components
 import { GenreComponent } from '../genre/genre.component';
@@ -22,7 +23,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  providers: [DatePipe]
 })
 export class ProfileComponent implements OnInit {
 
@@ -43,7 +45,8 @@ export class ProfileComponent implements OnInit {
     public fetchMovies: FetchApiDataService,
     public snackBar: MatSnackBar,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public datePipe: DatePipe
     ) {}
 
   ngOnInit(): void {
@@ -59,7 +62,11 @@ export class ProfileComponent implements OnInit {
     this.user = this.fetchMovies.getUser();
     this.userData.Username = this.user.Username;
     this.userData.Email = this.user.Email;
-    this.userData.Birthday = this.user.Birthday;
+
+    if (this.user.Birthday) {
+      this.userData.Birthday = this.datePipe.transform(this.user.Birthday, 'yyyy-MM-dd') || this.user.Birthday;
+    }
+
     this.fetchMovies.getAllMovies().subscribe((response) => {
       this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
     });
@@ -69,8 +76,8 @@ export class ProfileComponent implements OnInit {
    * Function for updating user information.
    * @returns Message "User update successful" / "Failed to update user"
    */
-  updateUser(): void {
-    this.fetchMovies.editUser(this.userData).subscribe((result) => {
+  editUser(): void {
+    this.fetchMovies.editUser(this.user).subscribe((result) => {
       console.log('User update success:', result);
       localStorage.setItem('user', JSON.stringify(result));
       this.snackBar.open('User update successful', 'OK', {
@@ -112,55 +119,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  //   /**
-  //  * Function that will open the dialog when director button is clicked.
-  //  * @param {string} name - Name of the director.
-  //  * @param {string} bio - Biography of the director.
-  //  * @param {string} birth - Birth date of the director.
-  //  * @param {string} death - Death date of the director.
-  //  * @returns Directors name, bio, birth date and death date.
-  //  */
-  //   getOneDirector(name: string, bio: string, birth: string, death: string): void {
-  //     this.dialog.open(DirectorComponent, {
-  //       data: {
-  //         Name: name,
-  //         Bio: bio,
-  //         Birth: birth,
-  //         Death: death
-  //       },
-  //       width: '450px',
-  //     });
-  //   }
-  
-  //   /**
-  //  * Function that will open the dialog when genre button is clicked.
-  //  * @param {string} name - Name of the genre.
-  //  * @param {string} description - Description of the genre.
-  //  * @returns Genre name and discription.
-  //  */
-  //   getGenre(name: string, description: string): void {
-  //     this.dialog.open(GenreComponent, {
-  //       data: {
-  //         Name: name,
-  //         Description: description,
-  //       },
-  //       width: '450px',
-  //     });
-  //   }
-  
-  //   /**
-  //  * Function that will open the dialog when synopsis button is clicked
-  //  * @param {string} description - Description of the movie.
-  //  * @returns Description of the movie.
-  //  */
-  //   openMovieDetails(description: string): void {
-  //     this.dialog.open(MovieDetailsComponent, {
-  //       data: {
-  //         Description: description,
-  //       },
-  //       width: '450px',
-  //     });
-  //   }
 
   public getGenre(Genre: any){
     this.dialog.open(GenreComponent, { width: '400px', height: '300px', data: {Genre: Genre}});
