@@ -164,7 +164,7 @@ export class FetchApiDataService {
    * @returns {Observable<any>} - Observable for the API response.
    */
   editUser(userDetails: any): Observable<any> {
-    console.log(userDetails.Username)
+    console.log(userDetails)
     const token = localStorage.getItem('token');
     return this.http.put(apiUrl + 'users/' + userDetails.Username, userDetails, {headers: new HttpHeaders(
       {

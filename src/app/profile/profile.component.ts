@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
    * @returns Message "User update successful" / "Failed to update user"
    */
   editUser(): void {
-    this.fetchApiData.editUser(this.user).subscribe((result) => {
+    this.fetchApiData.editUser(this.userData).subscribe((result) => {
       console.log('User update success:', result);
       localStorage.setItem('user', JSON.stringify(result));
       this.snackBar.open('User update successful', 'OK', {
