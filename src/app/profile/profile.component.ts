@@ -63,9 +63,16 @@ export class ProfileComponent implements OnInit {
     this.userData.Username = this.user.Username;
     this.userData.Email = this.user.Email;
 
+    // if (this.user.Birthday) {
+    //   this.userData.Birthday = this.datePipe.transform(this.user.Birthday, 'yyyy-MM-dd') || this.user.Birthday;
+    // }
+
     if (this.user.Birthday) {
-      this.userData.Birthday = this.datePipe.transform(this.user.Birthday, 'yyyy-MM-dd') || this.user.Birthday;
+      const utcDate = new Date(this.user.Birthday);
+      const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+      this.userData.Birthday = localDate.toISOString().slice(0, 10);
     }
+        
 
     this.fetchApiData.getAllMovies().subscribe((response) => {
       this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
