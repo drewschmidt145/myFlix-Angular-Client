@@ -9,6 +9,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DirectorComponent implements OnInit {
 
+  /**
+   * @constructor - constructor for DirectorComponent
+   * @param data - data containing the director information
+   */
   constructor(@Inject(MAT_DIALOG_DATA) public data: { Director: any}) { }
 
   ngOnInit(): void {

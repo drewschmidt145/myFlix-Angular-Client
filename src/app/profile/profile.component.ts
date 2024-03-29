@@ -63,16 +63,11 @@ export class ProfileComponent implements OnInit {
     this.userData.Username = this.user.Username;
     this.userData.Email = this.user.Email;
 
-    // if (this.user.Birthday) {
-    //   this.userData.Birthday = this.datePipe.transform(this.user.Birthday, 'yyyy-MM-dd') || this.user.Birthday;
-    // }
-
     if (this.user.Birthday) {
       const utcDate = new Date(this.user.Birthday);
       const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
       this.userData.Birthday = localDate.toISOString().slice(0, 10);
     }
-        
 
     this.fetchApiData.getAllMovies().subscribe((response) => {
       this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
@@ -126,15 +121,29 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Function for getting all movies.
+   * @param Genre - gets the movies genre and descriptions attached
+   * @returns pulls the genre componenent to get movies genre.
+   */
   public getGenre(Genre: any){
     this.dialog.open(GenreComponent, { width: '400px', height: '300px', data: {Genre: Genre}});
   }
 
+  /**
+   * Function for getting all movies.
+   * @param Director - gets the movies Director, with name and description attached
+   * @returns pulls the director componenent to get movies director.
+   */
   public getOneDirector(Director: any){
     this.dialog.open(DirectorComponent, { width: '400px', height: '300px', data: {Director: Director}});
   }  
 
+  /**
+   * Function for getting all movies.
+   * @param Details - gets the movies details including the descriptions attached
+   * @returns pulls the details componenent to get movies information.
+   */
   public openMovieDetails(Details: string){
     this.dialog.open(MovieDetailsComponent, { width: '400px', height: '300px', data: {Details: Details}});
   }

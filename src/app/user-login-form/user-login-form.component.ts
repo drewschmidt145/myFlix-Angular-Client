@@ -4,6 +4,10 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
+/**
+ * @component UserLoginFormComponent
+ * @description Represents a component for user login form.
+ */
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
@@ -11,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class UserLoginFormComponent implements OnInit {
 
+  /** Input data for user login containing username and password. */
   @Input() userData = { Username: '', Password: '' };
 
   constructor(
@@ -25,7 +30,8 @@ export class UserLoginFormComponent implements OnInit {
   }
 
   /**
-   * Function responsible for sending the form inputs to the backend
+   * @method loginUser
+   * @description Sends the user login credentials to the backend for authentication.
    */
   loginUser(): void {
     this.FetchApiDataService.userLogin(this.userData).subscribe((result) => {
@@ -35,15 +41,15 @@ export class UserLoginFormComponent implements OnInit {
       localStorage.setItem('token', result.token);
       this.dialogRef.close(); // This will close the modal on success!
       console.log(result);
-      this.snackBar.open('user logged in successfully', 'OK', {
+      this.snackBar.open('User logged in successfully', 'OK', {
         duration: 2000
       });
 
       this.router.navigate(['movies']);
     }, (result) => {
-      this.snackBar.open('login failed', 'OK', {
+      this.snackBar.open('Login failed', 'OK', {
         duration: 2000
       });
     });
-}
+  }
 }
