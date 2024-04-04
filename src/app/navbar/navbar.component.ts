@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 
 /**
  * @component NavbarComponent
- * @description Represents a navigation bar component for the application.
+ * @description Component representing the navbar.
+ * @selector 'app-navbar'
+ * @templateUrl './navbar.component.html'
+ * @styleUrls ['./navbar.component.scss']
  */
 @Component({
   selector: 'app-navbar',
@@ -12,6 +15,11 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  /**
+   * @constructor - Constructor for NavbarComponent. 
+   * @param {Router} router - Router service for navigation.
+   * @param {MatSnackBar} snackBar - Material snack bar service for displaying notifications.
+   */
   constructor(public router: Router) { }
 
   ngOnInit(): void {

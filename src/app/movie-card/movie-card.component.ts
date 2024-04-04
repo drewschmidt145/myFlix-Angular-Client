@@ -9,8 +9,10 @@ import { MovieDetailsComponent } from '../movie-details/movie-details.component'
 
 /**
  * @component MovieCardComponent
- * @description Represents a component that displays movie cards and allows interactions with them, such as adding to favorites and opening details.
- */
+ * @description Component representing the movie card.
+ * @selector 'app-movie-card'
+ * @templateUrl './movie-card.component.html'
+ * @styleUrls ['./movie-card.component.scss'] */
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -18,21 +20,18 @@ import { MovieDetailsComponent } from '../movie-details/movie-details.component'
 })
 export class MovieCardComponent implements OnInit {
 
-  /** Array containing movie objects. */
   movies: any[] = [];
-
-  /** Object representing the current user. */
   user: any = {};
-
-  /** Object containing user data including username and favorite movies. */
   userData = { Username: "", FavoriteMovies: [] };
-
-  /** Array containing favorite movies of the user. */
   FavoriteMovies: any[] = [];
-
-  /** Boolean indicating whether the movie is a favorite. */
   isFavMovie: boolean = false;
 
+  /**
+   * @constructor - Constructor for MovieCardComponent.
+   * @param {FetchApiDataService} fetchApiData - Service for fetching data from the API.
+   * @param {MatDialog} dialog - Material dialog service for opening dialogs.
+   * @param {MatSnackBar} snackBar - Material snack bar service for displaying notifications.
+   */
   constructor(
     public fetchMovies: FetchApiDataService,
     public router: Router,
@@ -48,6 +47,7 @@ export class MovieCardComponent implements OnInit {
   /**
    * @method getMovies
    * @description Retrieves all movies from the API.
+   * @returns All Movies.
    */
   getMovies(): void {
     this.fetchMovies.getAllMovies().subscribe((resp: any) => {
@@ -60,6 +60,7 @@ export class MovieCardComponent implements OnInit {
   /**
    * @method getFavMovies
    * @description Retrieves favorite movies of the user.
+   * @returns list of favorites movies
    */
   getFavMovies(): void {
     this.user = this.fetchMovies.getUser();
@@ -99,6 +100,7 @@ export class MovieCardComponent implements OnInit {
    * @method addFavMovies
    * @description Adds a movie to the list of favorite movies.
    * @param movie - The movie object to add to favorite movies.
+   * @returns message "Movie has been added to your favorites."
    */
   addFavMovies(movie: any): void {
     this.user = this.fetchMovies.getUser();
@@ -116,6 +118,7 @@ export class MovieCardComponent implements OnInit {
    * @method deleteFavMovies
    * @description Deletes a movie from the list of favorite movies.
    * @param movie - The movie object to delete from favorite movies.
+   * @returns mesage "Movie has been deleted from your favorites."
    */
   deleteFavMovies(movie: any): void {
     this.user = this.fetchMovies.getUser();
@@ -133,6 +136,7 @@ export class MovieCardComponent implements OnInit {
    * @method getGenre
    * @description Opens a dialog to display genre details.
    * @param Genre - The genre object to display details for.
+   * @returns genre object of movie
    */
   public getGenre(Genre: any) {
     this.dialog.open(GenreComponent, { width: '400px', height: '300px', data: { Genre: Genre } });
@@ -142,6 +146,7 @@ export class MovieCardComponent implements OnInit {
    * @method getOneDirector
    * @description Opens a dialog to display director details.
    * @param Director - The director object to display details for.
+   * @returns director object of movie
    */
   public getOneDirector(Director: any) {
     this.dialog.open(DirectorComponent, { width: '400px', height: '300px', data: { Director: Director } });
@@ -151,6 +156,7 @@ export class MovieCardComponent implements OnInit {
    * @method openMovieDetails
    * @description Opens a dialog to display movie details.
    * @param Details - The details of the movie to display.
+   * @returns movie description
    */
   public openMovieDetails(Details: string) {
     this.dialog.open(MovieDetailsComponent, { width: '400px', height: '300px', data: { Details: Details } });

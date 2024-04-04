@@ -6,8 +6,10 @@ import { Router } from '@angular/router';
 
 /**
  * @component UserLoginFormComponent
- * @description Represents a component for user login form.
- */
+ * @description Component representing the login form.
+ * @selector 'app-user-login-form'
+ * @templateUrl './user-login-form.component.html'
+ * @styleUrls ['./user-login-form.component.scss'] */
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
@@ -18,6 +20,13 @@ export class UserLoginFormComponent implements OnInit {
   /** Input data for user login containing username and password. */
   @Input() userData = { Username: '', Password: '' };
 
+  /**
+   * @constructor
+   * @param {FetchApiDataService} FetchApiDataService - Service for fetching data from the API.
+   * @param {MatDialogRef<UserLoginFormComponent>} dialogRef - Material dialog service for opening user login dialog.
+   * @param {MatSnackBar} snackBar - Material snack bar service for displaying notifications.
+   * @param {Router} router - Router service for navigation.
+   */
   constructor(
     public FetchApiDataService: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
@@ -32,6 +41,7 @@ export class UserLoginFormComponent implements OnInit {
   /**
    * @method loginUser
    * @description Sends the user login credentials to the backend for authentication.
+   * @returns message saying "User logged in successfully" / "Login failed"
    */
   loginUser(): void {
     this.FetchApiDataService.userLogin(this.userData).subscribe((result) => {

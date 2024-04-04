@@ -12,11 +12,18 @@ const apiUrl = 'https://myflix-movieapplication-16850a5656e8.herokuapp.com/';
 
 export class FetchApiDataService {
 
-  // Inject the HttpClient module to the constructor params
- // This will provide HttpClient to the entire class, making it available via this.http
+  /**
+   * @constructor
+   * @param {HttpClient} http - For making HTTP requests.
+   */
   constructor(private http: HttpClient) {
   }
- // Making the api call for the user registration endpoint
+
+  /**
+   * Making the api call for the user registration endpoint.
+   * @param {any} userDetails - User details for registration.
+   * @returns {Observable<any>} - Observable for the API response.
+   */
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http.post(apiUrl + 'users', userDetails).pipe(
